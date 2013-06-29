@@ -336,17 +336,17 @@ return declare([List, _StoreMixin], {
 						break;
 					}
 					var nextRow = row[traversal]; // have to do this before removing it
-					var lastObserverIndex, currentObserverIndex = row.observerIndex;
-					if(currentObserverIndex != lastObserverIndex && lastObserverIndex > -1){
+					var currentObserverIndex = row.observerIndex, 
+						nextObserverIndex = nextRow ? nextRow.observerIndex : -1;
+					if(currentObserverIndex != nextObserverIndex){
 						// we have gathered a whole page of observed rows, we can delete them now
 						var observers = grid.observers; 
-						var observer = observers[lastObserverIndex]; 
+						var observer = observers[currentObserverIndex]; 
 						observer && observer.cancel();
-						observers[lastObserverIndex] = 0; // remove it so we don't call cancel twice
+						observers[currentObserverIndex] = 0; // remove it so we don't call cancel twice
 					}
 					reclaimedHeight += rowHeight;
 					count += row.count || 1;
-					lastObserverIndex = currentObserverIndex;
 					// we just do cleanup here, as we will do a more efficient node destruction in the setTimeout below
 					grid.removeRow(row, true);
 					toDelete.push(row);

@@ -467,6 +467,7 @@ function(kernel, declare, listen, has, miscUtil, TouchScroll, hasClass, put){
 					from != to && firstRow && self.adjustRowIndices(firstRow);
 					self._onNotification(rows, object, from, to);
 				}, true)) - 1;
+				beforeNode.observerIndex = observerIndex;
 			}
 			var rowsFragment = document.createDocumentFragment();
 			// now render the results
